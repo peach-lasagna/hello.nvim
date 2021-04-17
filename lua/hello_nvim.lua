@@ -12,8 +12,14 @@ local function read_file(path)
   return data or ''
 end
 
-function M.random_phrase(path)
-  local data = read_file(path):gmatch("[^\r\n]+")
+function M.random_phrase()
+  math.randomseed(os.time()) -- random initialize
+  local path = vim.g.hello_nvim_path or ''
+  local file_data = read_file(path):gmatch("[^\r\n]+")
+  local data = {}
+  for line in file_data do
+    table.insert(data, line)
+  end
   print(data[math.random(#data)])
 end
 
